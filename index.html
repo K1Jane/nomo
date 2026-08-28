@@ -530,21 +530,21 @@ body{
     </h1>
 
     <section class="name-form">
-      <label class="name-label" for="nameInput">
+      <label class="name-label" for="answerField">
         Как вас зовут?
       </label>
 
       <input
-        id="nameInput"
+        id="answerField"
         class="name-input"
         type="text"
         inputmode="text"
-        autocomplete="off"
+        autocomplete="new-password"
         autocapitalize="none"
         spellcheck="false"
          autocorrect="off"
         placeholder="Введите имя..."
-        aria-label="Имя"
+        aria-label="Ответ"
       >
     </section>
 
@@ -585,7 +585,7 @@ body{
   const track = document.getElementById("track");
   const picker = document.getElementById("picker");
   const ageValue = document.getElementById("ageValue");
-  const nameInput = document.getElementById("nameInput");
+  const nameInput = document.getElementById("answerField");
   const cta = document.getElementById("cta");
   const stepNav = document.querySelector(".step-nav");
   const loadingScreen = document.getElementById("loadingScreen");
