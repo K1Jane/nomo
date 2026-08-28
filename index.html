@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>NOMO — шаг 3</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600&display=swap');
+
+:root{
+  --black:#000000;
+  --neutral-200:#000000;
+  --black-200:#2D2D2D;
+  --white:#FFFFFF;
+  --white-200:#DBDBDB;
+  --white-100:#F3F3F3;
+
+  --page-width:393px;
+  --content-width:353px;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:#fff;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+}
+
+.phone{
+  position:relative;
+  width:min(393px,100vw);
+  height:min(852px,100dvh);
+  min-height:568px;
+  margin:0 auto;
+  overflow:hidden;
+  background:#fff;
+  color:#000;
+}
+
+/* =========================
+   STEP 3 / 3
+   Figma: x 20.5, y 62
+   icon 16x16, gap 6
+   ========================= */
+
+.step-nav{
+  position:absolute;
+  left:20.5px;
+  top:62px;
+
+  height:16px;
+
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  z-index:20;
+}
+
+.back-icon{
+  position:relative;
+  width:16px;
+  height:16px;
+  flex:0 0 16px;
+}
+
+.back-icon::before{
+  content:"";
+  position:absolute;
+
+  left:5px;
+  top:4px;
+
+  width:6px;
+  height:6px;
+
+  border-left:1.5px solid #2D2D2D;
+  border-bottom:1.5px solid #2D2D2D;
+
+  transform:rotate(45deg);
+}
+
+.step-text{
+  margin:0;
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:14px;
+  line-height:16px;
+  font-weight:600;
+  letter-spacing:0;
+
+  color:#2D2D2D;
+  white-space:nowrap;
+}
+
+/* =========================
+   TITLE
+   Figma: top 142 / width 353
+   Suisse Intl Medium 28/32
+   ========================= */
+
+.title{
+  position:absolute;
+
+  left:50%;
+  top:142px;
+
+  width:353px;
+  margin:0;
+
+  transform:translateX(-50%);
+
+  font-family:"Suisse Intl",-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  font-size:28px;
+  line-height:32px;
+  font-weight:500;
+  letter-spacing:0;
+
+  text-align:center;
+  color:#000;
+}
+
+/* =========================
+   NAME FORM
+   Figma: top 246 / width 353
+   gap 16
+   ========================= */
+
+.name-form{
+  position:absolute;
+
+  left:50%;
+  top:246px;
+
+  width:353px;
+
+  transform:translateX(-50%);
+}
+
+.name-label{
+  display:block;
+
+  width:100%;
+  height:24px;
+
+  margin:0 0 16px;
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:18px;
+  line-height:24px;
+  font-weight:600;
+  letter-spacing:0;
+
+  color:#000;
+}
+
+.name-input{
+  display:block;
+
+  width:353px;
+  height:56px;
+
+  margin:0;
+  padding:16px;
+
+  border:0;
+  outline:0;
+  border-radius:14px;
+
+  background:#F3F3F3;
+
+  -webkit-appearance:none;
+  appearance:none;
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:16px;
+  line-height:24px;
+  font-weight:500;
+  letter-spacing:0;
+
+  color:#000;
+  caret-color:#000;
+}
+
+.name-input::placeholder{
+  color:#000;
+  opacity:.5;
+}
+
+.name-input:focus{
+  outline:none;
+}
+
+/* =========================
+   AGE FORM
+   Figma: top 366 / width 353
+   gap 16
+   ========================= */
+
+.age-form{
+  position:absolute;
+
+  left:50%;
+  top:366px;
+
+  width:353px;
+
+  transform:translateX(-50%);
+}
+
+.age-label{
+  width:100%;
+  height:24px;
+
+  margin:0 0 16px;
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:18px;
+  line-height:24px;
+  font-weight:600;
+  letter-spacing:0;
+
+  color:#000;
+}
+
+/* =========================
+   SCALE
+   Figma: width 353
+   30 ticks, space-between
+   normal 4x24
+   active 4x32
+   ========================= */
+
+.picker{
+  position:relative;
+
+  width:353px;
+  height:40px;
+
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+
+  cursor:pointer;
+}
+
+.track{
+  position:absolute;
+
+  left:0;
+  top:0;
+
+  width:353px;
+  height:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  pointer-events:none;
+}
+
+.tick{
+  width:4px;
+  height:24px;
+
+  flex:0 0 4px;
+
+  border-radius:100px;
+
+  background:#DBDBDB;
+
+  transition:
+    height 90ms ease,
+    background-color 90ms ease;
+}
+
+.tick.active{
+  width:4px;
+  height:32px;
+
+  background:#000;
+}
+
+/* =========================
+   AGE VALUE
+   Figma: x 16 / y 446
+   Manrope Medium 14/16
+   During interaction it follows
+   the selected tick.
+   ========================= */
+
+.age-value{
+  position:absolute;
+
+  left:0;
+  top:40px;
+
+  margin:0;
+
+  transform:translateX(-50%);
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:14px;
+  line-height:16px;
+  font-weight:500;
+  letter-spacing:0;
+
+  color:#000;
+
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+/* =========================
+   BUTTON
+   Figma: top 502 / 353x48
+   ========================= */
+
+.cta{
+  position:absolute;
+
+  left:50%;
+  top:502px;
+
+  width:353px;
+  height:48px;
+
+  transform:translateX(-50%);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin:0;
+  padding:12px 16px;
+
+  border:0;
+  border-radius:100px;
+
+  background:#000;
+
+  color:#fff;
+
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:16px;
+  line-height:24px;
+  font-weight:600;
+  letter-spacing:0;
+
+  opacity:.5;
+
+  -webkit-appearance:none;
+  appearance:none;
+
+  transition:opacity 120ms ease;
+}
+
+.cta.enabled{
+  opacity:1;
+}
+
+.cta:disabled{
+  cursor:default;
+}
+
+.cta:active:not(:disabled){
+  transform:translateX(-50%) scale(.995);
+}
+
+/* =========================
+   iPhone keyboard:
+   do NOT move/hide the scale.
+   The layout itself remains fixed.
+   ========================= */
+
+@media (max-width:392px){
+  .phone{
+    width:100vw;
+  }
+
+  .title,
+  .name-form,
+  .age-form,
+  .cta{
+    width:calc(100vw - 40px);
+  }
+
+  .name-input,
+  .picker,
+  .track{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="phone" id="phone">
+
+  <nav class="step-nav" aria-label="Навигация">
+    <button class="back-icon" type="button" aria-label="Назад"></button>
+    <p class="step-text">Шаг 3 из 3</p>
+  </nav>
+
+  <main>
+
+    <h1 class="title">
+      Последний шаг:<br>
+      короткое знакомство
+    </h1>
+
+    <section class="name-form">
+      <label class="name-label" for="nameInput">
+        Как вас зовут?
+      </label>
+
+      <input
+        id="nameInput"
+        class="name-input"
+        type="text"
+        inputmode="text"
+        autocomplete="given-name"
+        autocapitalize="words"
+        spellcheck="false"
+        placeholder="Введите имя..."
+        aria-label="Имя"
+      >
+    </section>
+
+    <section class="age-form">
+      <p class="age-label">Сколько вам лет?</p>
+
+      <div
+        id="picker"
+        class="picker"
+        role="slider"
+        tabindex="0"
+        aria-label="Возраст"
+        aria-valuemin="12"
+        aria-valuemax="41"
+        aria-valuenow="12"
+      >
+        <div id="track" class="track"></div>
+        <div id="ageValue" class="age-value">12</div>
+      </div>
+    </section>
+
+    <button id="cta" class="cta" type="button" disabled>
+      Продолжить
+    </button>
+
+  </main>
+</div>
+
+<script>
+(() => {
+  /*
+    Figma node 150:11196 содержит 30 палочек.
+    Поэтому здесь 30 значений: 12–41.
+  */
+  const MIN_AGE = 12;
+  const MAX_AGE = 41;
+
+  const track = document.getElementById("track");
+  const picker = document.getElementById("picker");
+  const ageValue = document.getElementById("ageValue");
+  const nameInput = document.getElementById("nameInput");
+  const cta = document.getElementById("cta");
+
+  const COUNT = MAX_AGE - MIN_AGE + 1;
+
+  let age = MIN_AGE;
+  let position = 0;
+
+  let dragging = false;
+  let moved = false;
+  let pointerStartX = 0;
+  let positionStart = 0;
+
+  /* create exact 30 ticks */
+  const ticks = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    const tick = document.createElement("div");
+    tick.className = "tick";
+    tick.dataset.age = String(MIN_AGE + i);
+
+    track.appendChild(tick);
+    ticks.push(tick);
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function maxPosition() {
+    return picker.clientWidth;
+  }
+
+  function ageToPosition(value) {
+    const max = maxPosition();
+
+    return ((value - MIN_AGE) / (MAX_AGE - MIN_AGE)) * max;
+  }
+
+  function positionToAge(x) {
+    const max = maxPosition();
+
+    const normalized = clamp(x, 0, max) / max;
+
+    return MIN_AGE +
+      Math.round(normalized * (MAX_AGE - MIN_AGE));
+  }
+
+  function render() {
+    ticks.forEach(tick => {
+      tick.classList.toggle(
+        "active",
+        Number(tick.dataset.age) === age
+      );
+    });
+
+    /*
+      Значение находится под выбранной палочкой.
+      Для крайних положений ограничиваем его,
+      чтобы оно не вылезало за ширину.
+    */
+    const x = clamp(
+      ageToPosition(age),
+      8,
+      picker.clientWidth - 8
+    );
+
+    position = x;
+
+    ageValue.style.left = `${x}px`;
+    ageValue.textContent = String(age);
+
+    picker.setAttribute(
+      "aria-valuenow",
+      String(age)
+    );
+  }
+
+  function setAge(nextAge) {
+    age = clamp(
+      nextAge,
+      MIN_AGE,
+      MAX_AGE
+    );
+
+    render();
+  }
+
+  function setAgeFromClientX(clientX) {
+    const rect = picker.getBoundingClientRect();
+
+    const x = clamp(
+      clientX - rect.left,
+      0,
+      rect.width
+    );
+
+    setAge(
+      positionToAge(x)
+    );
+  }
+
+  /*
+    iPhone / iPad pointer interaction.
+    Нажатие в любую точку шкалы выбирает ближайший возраст.
+  */
+  picker.addEventListener(
+    "pointerdown",
+    event => {
+      event.preventDefault();
+
+      dragging = true;
+      moved = false;
+
+      pointerStartX = event.clientX;
+      positionStart = position;
+
+      picker.setPointerCapture(event.pointerId);
+
+      setAgeFromClientX(event.clientX);
+    },
+    { passive:false }
+  );
+
+  picker.addEventListener(
+    "pointermove",
+    event => {
+      if (!dragging) return;
+
+      event.preventDefault();
+
+      const delta =
+        event.clientX - pointerStartX;
+
+      if (Math.abs(delta) > 3) {
+        moved = true;
+      }
+
+      const x =
+        positionStart + delta;
+
+      const max = picker.clientWidth;
+
+      position = clamp(
+        x,
+        0,
+        max
+      );
+
+      age = positionToAge(position);
+
+      render();
+    },
+    { passive:false }
+  );
+
+  function finishPointer(event) {
+    if (!dragging) return;
+
+    dragging = false;
+
+    try {
+      picker.releasePointerCapture(event.pointerId);
+    } catch (_) {}
+
+    /*
+      Всегда защёлкиваемся на ближайшую палочку.
+    */
+    setAge(
+      positionToAge(position)
+    );
+  }
+
+  picker.addEventListener(
+    "pointerup",
+    finishPointer
+  );
+
+  picker.addEventListener(
+    "pointercancel",
+    finishPointer
+  );
+
+  /*
+    Keyboard accessibility.
+  */
+  picker.addEventListener("keydown", event => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      setAge(age + 1);
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      setAge(age - 1);
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      setAge(MIN_AGE);
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      setAge(MAX_AGE);
+    }
+  });
+
+  /*
+    Кнопка:
+    1+ непробельный символ → чёрная.
+    Пусто → 50% opacity.
+  */
+  function updateButton() {
+    const hasName =
+      nameInput.value.trim().length > 0;
+
+    cta.disabled = !hasName;
+    cta.classList.toggle(
+      "enabled",
+      hasName
+    );
+  }
+
+  nameInput.addEventListener(
+    "input",
+    updateButton
+  );
+
+  nameInput.addEventListener(
+    "keyup",
+    updateButton
+  );
+
+  nameInput.addEventListener(
+    "change",
+    updateButton
+  );
+
+  /*
+    При изменении ширины viewport пересчитываем
+    позицию цифры, но не меняем выбранный возраст.
+    Это важно для iPhone.
+  */
+  window.addEventListener(
+    "resize",
+    render
+  );
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener(
+      "resize",
+      render
+    );
+  }
+
+  /*
+    Initial state.
+  */
+  setAge(MIN_AGE);
+  updateButton();
+
+})();
+</script>
+
+</body>
+</html>
