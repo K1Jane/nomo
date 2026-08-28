@@ -256,6 +256,7 @@ body{
 
 .track{
   position:absolute;
+  z-index:1;
 
   left:0;
   top:0;
@@ -268,6 +269,7 @@ body{
   justify-content:space-between;
 
   pointer-events:none;
+  z-index:2;
 }
 
 .tick{
@@ -281,15 +283,53 @@ body{
   background:#DBDBDB;
 
   transition:
-    height 90ms ease,
-    background-color 90ms ease;
+    height 180ms cubic-bezier(.22,1,.36,1),
+    width 180ms cubic-bezier(.22,1,.36,1),
+    background-color 180ms cubic-bezier(.22,1,.36,1),
+    transform 180ms cubic-bezier(.22,1,.36,1),
+    opacity 180ms ease;
 }
 
 .tick.active{
-  width:4px;
+  width:5px;
   height:32px;
 
   background:#000;
+  transform:scaleY(1.04);
+}
+
+.tick.near{
+  height:28px;
+  opacity:.72;
+}
+
+.tick.far{
+  opacity:.92;
+}
+
+.picker::after{
+  content:"";
+  position:absolute;
+  left:var(--indicator-x, 0px);
+  top:-7px;
+  width:44px;
+  height:46px;
+  border-radius:15px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 5px 18px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.95);
+  backdrop-filter:blur(10px) saturate(1.15);
+  -webkit-backdrop-filter:blur(10px) saturate(1.15);
+  pointer-events:none;
+  opacity:0;
+  transform:translateX(-50%) scale(.88);
+  transition:left 180ms cubic-bezier(.22,1,.36,1), opacity 160ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+  z-index:0;
+}
+
+.picker.is-interacting::after{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
 }
 
 /* =========================
@@ -320,6 +360,12 @@ body{
 
   white-space:nowrap;
   pointer-events:none;
+  z-index:3;
+  transition: left 180ms cubic-bezier(.22,1,.36,1), transform 220ms cubic-bezier(.22,1,.36,1), font-size 180ms ease;
+}
+
+.picker.is-interacting .age-value{
+  transform:translateX(-50%) scale(1.06);
 }
 
 /* =========================
@@ -512,7 +558,7 @@ body{
           <div class="loading-progress-bg"></div>
           <div class="loading-progress-fill"></div>
         </div>
-        <p class="loading-text">Создаём профиль...</p>
+        <p class="loading-text">Запоминаем предпочтения...</p>
       </div>
     </div>
   </section>
@@ -652,10 +698,11 @@ body{
 
   function render() {
     ticks.forEach(tick => {
-      tick.classList.toggle(
-        "active",
-        Number(tick.dataset.age) === age
-      );
+      const tickAge = Number(tick.dataset.age);
+      const distance = Math.abs(tickAge - age);
+      tick.classList.toggle("active", distance === 0);
+      tick.classList.toggle("near", distance === 1);
+      tick.classList.toggle("far", distance > 1);
     });
 
     /*
@@ -672,6 +719,7 @@ body{
     position = x;
 
     ageValue.style.left = `${x}px`;
+    picker.style.setProperty("--indicator-x", `${x}px`);
     ageValue.textContent = String(age);
 
     picker.setAttribute(
@@ -714,6 +762,7 @@ body{
       event.preventDefault();
 
       dragging = true;
+      picker.classList.add("is-interacting");
       moved = false;
 
       pointerStartX = event.clientX;
@@ -762,6 +811,7 @@ body{
     if (!dragging) return;
 
     dragging = false;
+    picker.classList.remove("is-interacting");
 
     try {
       picker.releasePointerCapture(event.pointerId);
