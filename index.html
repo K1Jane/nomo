@@ -76,23 +76,19 @@ body{
   width:16px;
   height:16px;
   flex:0 0 16px;
+  border:0;
+  padding:0;
+  margin:0;
+  background:#fff url("https://www.figma.com/api/mcp/asset/0357a838-5c02-4cd3-bdc2-b24a2ae99320.svg") center / 16px 16px no-repeat;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
 }
 
 .back-icon::before{
-  content:"";
-  position:absolute;
-
-  left:5px;
-  top:4px;
-
-  width:6px;
-  height:6px;
-
-  border-left:1.5px solid #2D2D2D;
-  border-bottom:1.5px solid #2D2D2D;
-
-  transform:rotate(45deg);
+  content:none;
 }
+
 
 .step-text{
   margin:0;
@@ -406,11 +402,113 @@ body{
     width:100%;
   }
 }
+
+
+/* =========================
+   LOADING SCREEN — Figma 141:7492
+   ========================= */
+.loading-screen{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:#fff;
+  color:#000;
+}
+
+.loading-container{
+  position:absolute;
+  left:20px;
+  top:240px;
+  width:353px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:64px;
+}
+
+.loading-illustration{
+  width:64px;
+  height:66px;
+  flex:0 0 66px;
+  display:block;
+  object-fit:contain;
+}
+
+.loading-content{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:32px;
+}
+
+.loading-progress{
+  position:relative;
+  width:353px;
+  height:6px;
+  flex:0 0 6px;
+}
+
+.loading-progress-bg,
+.loading-progress-fill{
+  position:absolute;
+  left:0;
+  top:0;
+  height:6px;
+  border-radius:100px;
+}
+
+.loading-progress-bg{
+  width:353px;
+  background:#F3F3F3;
+}
+
+.loading-progress-fill{
+  width:45px;
+  background:#000;
+}
+
+.loading-text{
+  width:100%;
+  margin:0;
+  font-family:"Manrope",-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+  font-size:16px;
+  line-height:24px;
+  font-weight:400;
+  letter-spacing:0;
+  text-align:center;
+  color:#000;
+  opacity:.8;
+}
+
+@media (max-width:392px){
+  .loading-container{ width:calc(100vw - 40px); }
+  .loading-progress,
+  .loading-progress-bg{ width:100%; }
+}
+
 </style>
 </head>
 
 <body>
 <div class="phone" id="phone">
+
+  <section class="loading-screen" id="loadingScreen" aria-label="Загрузка">
+    <div class="loading-container">
+      <img
+        class="loading-illustration"
+        src="https://www.figma.com/api/mcp/asset/98982cf5-fc8e-48ea-8513-4d33c0b69565.svg"
+        alt=""
+      >
+      <div class="loading-content">
+        <div class="loading-progress" aria-hidden="true">
+          <div class="loading-progress-bg"></div>
+          <div class="loading-progress-fill"></div>
+        </div>
+        <p class="loading-text">Запоминаем предпочтения...</p>
+      </div>
+    </div>
+  </section>
 
   <nav class="step-nav" aria-label="Навигация">
     <button class="back-icon" type="button" aria-label="Назад"></button>
@@ -481,6 +579,8 @@ body{
   const ageValue = document.getElementById("ageValue");
   const nameInput = document.getElementById("nameInput");
   const cta = document.getElementById("cta");
+  const stepNav = document.querySelector(".step-nav");
+  const loadingScreen = document.getElementById("loadingScreen");
 
   const COUNT = MAX_AGE - MIN_AGE + 1;
 
@@ -717,6 +817,20 @@ body{
     "change",
     updateButton
   );
+
+  /*
+    Continue → Figma node 141:7492.
+    The loading screen uses the exact values from that frame:
+    container 20/240, 353 wide, gap 64; illustration 64x66;
+    progress 353x6 with 45px filled; text Manrope Regular 16/24, 80%.
+  */
+  cta.addEventListener("click", () => {
+    if (cta.disabled) return;
+
+    document.querySelector("main").style.display = "none";
+    stepNav.style.display = "none";
+    loadingScreen.style.display = "block";
+  });
 
   /*
     При изменении ширины viewport пересчитываем
