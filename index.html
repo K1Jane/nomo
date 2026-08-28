@@ -466,7 +466,7 @@ body{
 .loading-progress-fill{
   width:0;
   background:#000;
-  animation:loadingProgress 3s cubic-bezier(.22,1,.36,1) forwards;
+  animation:loadingProgress 3s cubic-bezier(.22,1,.36,1) 30ms forwards;
   transform-origin:left center;
 }
 
@@ -541,7 +541,7 @@ body{
         inputmode="text"
         autocomplete="off"
         readonly
-        autocapitalize="none"
+        autocapitalize="sentences"
         spellcheck="false"
         autocorrect="off"
         data-form-type="other"
