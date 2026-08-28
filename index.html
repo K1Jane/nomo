@@ -539,10 +539,14 @@ body{
         class="name-input"
         type="text"
         inputmode="text"
-        autocomplete="new-password"
+        autocomplete="off"
+        readonly
         autocapitalize="none"
         spellcheck="false"
-         autocorrect="off"
+        autocorrect="off"
+        data-form-type="other"
+        data-lpignore="true"
+        data-1p-ignore="true"
         placeholder="Введите имя..."
         aria-label="Ответ"
       >
@@ -589,6 +593,17 @@ body{
   const cta = document.getElementById("cta");
   const stepNav = document.querySelector(".step-nav");
   const loadingScreen = document.getElementById("loadingScreen");
+
+  /*
+     Keep the field non-autofillable until the user explicitly taps it.
+     This prevents iOS Safari from treating the field as a contact/name
+     field before the normal text keyboard is opened.
+  */
+  nameInput.addEventListener("pointerdown", () => {
+    if (nameInput.readOnly) {
+      nameInput.readOnly = false;
+    }
+  }, { passive:true });
 
   const COUNT = MAX_AGE - MIN_AGE + 1;
 
