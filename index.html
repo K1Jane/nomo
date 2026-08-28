@@ -464,8 +464,15 @@ body{
 }
 
 .loading-progress-fill{
-  width:45px;
+  width:0;
   background:#000;
+  animation:loadingProgress 3s cubic-bezier(.22,1,.36,1) forwards;
+  transform-origin:left center;
+}
+
+@keyframes loadingProgress{
+  0%{ width:0; }
+  100%{ width:353px; }
 }
 
 .loading-text{
@@ -532,9 +539,10 @@ body{
         class="name-input"
         type="text"
         inputmode="text"
-        autocomplete="given-name"
-        autocapitalize="words"
+        autocomplete="off"
+        autocapitalize="none"
         spellcheck="false"
+         autocorrect="off"
         placeholder="Введите имя..."
         aria-label="Имя"
       >
